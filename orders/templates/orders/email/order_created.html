@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Order #{{ order.id }}</h1>
+    <p>Dear {{ order.first_name }},</p>
+    <p>Thank you for your order.</p>
+
+    <h2>Order details:</h2>
+    <ul>
+        {% for item in items %}
+        <li>{{ item.book.title }}: {{ item.quantity }} x ${{ item.price }} = ${{ item.get_cost }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Total: ${{ order.get_total_cost }}</strong></p>
+    {% if coupon %}
+    <p>Discount: {{ discount }}% (Coupon: {{ coupon.code }})</p>
+    {% endif %}
+
+    <p>Sincerely,<br>Bookshop Team</p>
+</body>
+</html>

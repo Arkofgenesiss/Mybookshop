@@ -1,0 +1,49 @@
+﻿[
+{
+  "model": "shop.book",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "author": "John Robert Fowles",
+    "cover": "books/2025/07/12/╩.png",
+    "price": "4.56",
+    "stock": 25,
+    "available": true,
+    "created": "2025-07-10T21:20:28.675Z",
+    "updated": "2025-07-12T17:36:50.020Z"
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "author": "Oscar Wilde",
+    "cover": "books/2025/07/12/╧юЁЄЁхЄ_dyQZjPg.png",
+    "price": "26.32",
+    "stock": 15,
+    "available": true,
+    "created": "2025-07-12T16:38:56.409Z",
+    "updated": "2025-07-12T16:47:35.644Z"
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "author": "Chuck Palahniuk",
+    "cover": "books/2025/07/12/я.png",
+    "price": "16.54",
+    "stock": 25,
+    "available": true,
+    "created": "2025-07-12T16:55:00.704Z",
+    "updated": "2025-07-12T16:57:31.868Z"
+  }
+},
+{
+  "model": "shop.book",
+  "pk": 4,
+  "fields": {
+    "category": 1,
+    "author": 

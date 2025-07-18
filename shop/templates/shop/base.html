@@ -1,0 +1,149 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% trans "Bookshop" %}{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="header">
+    <a href="{% url 'shop:book_list' %}" class="store-name">{% trans "Bookshop" %}</a>
+    <div class="header-right">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        <div class="languages">
+            <ul>
+                {% for language in languages %}
+                    <li>
+                        <a href="/{{ language.code }}/"
+                           {% if language.code == LANGUAGE_CODE %}class="selected"{% endif %}>
+                            {{ language.code|upper }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="cart">
+            {% with total_items=cart|length %}
+                {% if total_items > 0 %}
+                    <a href="{% url 'cart:cart_detail' %}">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count">{{ total_items }}</span>
+                        <span class="cart-price">${{ cart.get_total_price }}</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'cart:cart_detail' %}">
+                        <span class="cart-icon">🛒</span>
+                    </a>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</div>
+
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer>
+  <div class="footer-content">
+    <p>&copy; {% now "Y" %} {% trans "Bookshop" %}</p>
+  </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const header = document.getElementById('header');
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) {
+        header.classList.add('compact');
+      } else {
+        header.classList.remove('compact');
+      }
+    },
+    { threshold: 0, rootMargin: '-68px 0px 0px 0px' }
+  );
+
+  observer.observe(header);
+
+  const sentinel = document.createElement('div');
+  sentinel.style.position = 'absolute';
+  sentinel.style.top = '68px';
+  sentinel.style.height = '1px';
+  document.body.prepend(sentinel);
+
+  const sentinelObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.intersectionRatio < 1) {
+        header.classList.add('compact');
+      } else {
+        header.classList.remove('compact');
+      }
+    },
+    { threshold: [1] }
+  );
+
+  sentinelObserver.observe(sentinel);
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': this.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => {
+                submitButton.disabled = false;
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = data.total_items;
+                });
+
+
+                const priceElements = document.querySelectorAll('.cart-price');
+                if (priceElements.length > 0) {
+                    priceElements.forEach(el => {
+                        el.textContent = '$' + parseFloat(data.total_price).toFixed(2);
+                    });
+                }
+
+
+                submitButton.classList.add('success');
+                setTimeout(() => submitButton.classList.remove('success'), 1000);
+            })
+        });
+    });
+});
+</script>
+</body>
+</html>

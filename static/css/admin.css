@@ -1,0 +1,248 @@
+.module h2 {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 15px;
+}
+
+.parler-language-tabs {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.parler-language-tabs li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.parler-language-tabs a {
+    display: block;
+    padding: 8px 15px;
+    background: #f8f9fa;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.parler-language-tabs a.active {
+    background: #fff;
+    color: #5d9cec;
+    border-bottom: 1px solid #fff;
+    margin-bottom: -1px;
+}
+
+.object-tools {
+    float: right;
+    margin-bottom: 15px;
+}
+
+.object-tools li {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.object-tools a {
+    background: #5d9cec;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.object-tools a:hover {
+    background: #3a7bd5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th {
+    background: #f8f9fa;
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
+}
+
+.num {
+    text-align: right;
+}
+
+.total {
+    font-weight: bold;
+}
+
+.row1 {
+    background: #fff;
+}
+
+.row2 {
+    background: #f8f9fa;
+}
+
+.print-order {
+    background: #48cfad !important;
+}
+
+.print-order:hover {
+    background: #37bc9b !important;
+}
+
+.csv-export {
+    background: #a0d468 !important;
+}
+
+.csv-export:hover {
+    background: #8cc152 !important;
+}
+
+.discount {
+    color: #28a745;
+    font-weight: bold;
+}
+.subtotal td {
+    border-top: 2px solid #dee2e6;
+}
+.total td {
+    font-weight: bold;
+    border-top: 2px solid #000;
+}
+
+.module h2 {
+    background-color: #f0f4ff;
+    padding: 12px;
+    border-bottom: 1px solid #e0e6ff;
+    margin-bottom: 20px;
+    color: #6a5acd;
+}
+
+.parler-language-tabs {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e6ff;
+}
+
+.parler-language-tabs li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.parler-language-tabs a {
+    display: block;
+    padding: 8px 15px;
+    background: #f0f4ff;
+    color: #555;
+    text-decoration: none;
+    border: 1px solid #e0e6ff;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.parler-language-tabs a.active {
+    background: white;
+    color: #6a5acd;
+    border-bottom: 1px solid white;
+    margin-bottom: -1px;
+}
+
+.object-tools {
+    float: right;
+    margin-bottom: 15px;
+}
+
+.object-tools li {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.object-tools a {
+    background: linear-gradient(135deg, #6a5acd 0%, #4a6fa5 100%);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.object-tools a:hover {
+    background: linear-gradient(135deg, #5a4abd 0%, #3a5f95 100%);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+th {
+    background: #f0f4ff;
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 2px solid #e0e6ff;
+    color: #6a5acd;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f4ff;
+    vertical-align: top;
+}
+
+.num {
+    text-align: right;
+}
+
+.total {
+    font-weight: bold;
+}
+
+.row1 {
+    background: #fff;
+}
+
+.row2 {
+    background: #f9f9ff;
+}
+
+.print-order {
+    background: #6a5acd !important;
+}
+
+.print-order:hover {
+    background: #5a4abd !important;
+}
+
+.csv-export {
+    background: #4a6fa5 !important;
+}
+
+.csv-export:hover {
+    background: #3a5f95 !important;
+}
+
+.discount {
+    color: #6a5acd;
+    font-weight: bold;
+}
+
+.subtotal td {
+    border-top: 2px solid #e0e6ff;
+}
+
+.total td {
+    font-weight: bold;
+    border-top: 2px solid #6a5acd;
+    color: #6a5acd;
+}

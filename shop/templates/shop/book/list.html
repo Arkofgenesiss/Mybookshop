@@ -1,0 +1,66 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}{% trans "Books" %}{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="product-list-container">
+    <div class="filter-sidebar">
+        <h3>{% trans "Categories" %}</h3>
+        <ul class="category-list">
+            <li {% if not category %}class="selected"{% endif %}>
+                <a href="{% url 'shop:book_list' %}">{% trans "All Books" %}</a>
+            </li>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="product-main">
+        <h1 class="page-title">
+            {% if category %}
+                {{ category.name }}
+            {% else %}
+                {% trans "All Books" %}
+            {% endif %}
+        </h1>
+
+        <div class="products-grid">
+            {% for book in books %}
+            <div class="product-card">
+                <a href="{{ book.get_absolute_url }}" class="product-image-link">
+                    <div class="product-image-container">
+                        <img src="{% if book.cover %}{{ book.cover.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"
+                             class="product-image"
+                             alt="{{ book.title }}">
+                        <div class="product-overlay">
+                            <span class="view-details">{% trans "View Details" %}</span>
+                        </div>
+                    </div>
+                </a>
+                <div class="product-info">
+                    <a href="{{ book.get_absolute_url }}" class="product-title">{{ book.title }}</a>
+                    <div class="product-author">{% trans "by" %} {{ book.author }}</div>
+                    <div class="product-meta">
+                        <div class="product-price">${{ book.price }}</div>
+                        <form action="{% url 'cart:cart_add' book.id %}" method="post" class="add-to-cart-form">
+                            {{ cart_book_form }}
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-cart-button">
+                                <span class="cart-icon">+</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
