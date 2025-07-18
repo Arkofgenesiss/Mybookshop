@@ -4,32 +4,149 @@
 {% block title %}{% trans "Checkout" %}{% endblock %}
 
 {% block content %}
+<div class="hero">
     <h1>{% trans "Checkout" %}</h1>
+    <p>{% trans "Complete your purchase with secure payment" %}</p>
+</div>
 
-    <div class="order-info">
-        <h3>{% trans "Your order" %}</h3>
-        <ul>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }}x {{ item.book.title }}
-                    <span>${{ item.total_price }}</span>
-                </li>
-            {% endfor %}
+<div class="checkout-container">
+    <div class="checkout-grid">
+        <!-- Left Column - Shipping Form -->
+        <div class="checkout-form-container">
+            <h2 class="section-title">{% trans "Shipping Information" %}</h2>
+
+            <form action="." method="post" class="order-form">
+                {% csrf_token %}
+
+                <table class="form-table">
+                    <tr>
+                        <td>
+                            <div class="form-group framed">
+                                <label>{% trans "First Name" %}</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                <div class="form-error">{{ form.first_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group framed">
+                                <label>{% trans "Last Name" %}</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                <div class="form-error">{{ form.last_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="form-group framed">
+                                <label>{% trans "Email" %}</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                <div class="form-error">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="form-group framed">
+                                <label>{% trans "Address" %}</label>
+                                {{ form.address }}
+                                {% if form.address.errors %}
+                                <div class="form-error">{{ form.address.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group framed">
+                                <label>{% trans "Postal Code" %}</label>
+                                {{ form.postal_code }}
+                                {% if form.postal_code.errors %}
+                                <div class="form-error">{{ form.postal_code.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group framed">
+                                <label>{% trans "City" %}</label>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                <div class="form-error">{{ form.city.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <!-- Right Column - Order Summary -->
+        <div class="order-summary">
+            <h2 class="section-title">{% trans "Order Summary" %}</h2>
+
+            <div class="order-items">
+                {% for item in cart %}
+                <div class="product-image-mini">
+                    {% if item.book.cover %}
+                        <img src="{{ item.book.cover.url }}" alt="{{ item.book.title }}" class="mini-img">
+                    {% else %}
+                        <div class="image-placeholder">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                    <div class="product-details-mini">
+                        <h4>{{ item.book.title|truncatechars:30 }}</h4>
+                        <p class="author">{{ item.book.author }}</p>
+                        <table class="price-table">
+                            <tr>
+                                <td>{{ item.quantity }} × ${{ item.price|floatformat:"2" }}</td>
+                                <td class="text-right">${{ item.total_price|floatformat:"2" }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
             {% if cart.coupon %}
-                <li>
-                    {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
-                        "{{ code }}" ({{ discount }}% off)
-                    {% endblocktrans %}
-                    <span>-${{ cart.get_discount|floatformat:"2" }}</span>
-                </li>
+            <table class="discount-table">
+                <tr>
+                    <td>
+                        <span class="coupon-code">
+                            <i class="fas fa-tag"></i>
+                            {{ cart.coupon.code }} ({{ cart.coupon.discount }}% off)
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <span class="discount-amount">-${{ cart.get_discount|floatformat:"2" }}</span>
+                    </td>
+                </tr>
+            </table>
             {% endif %}
-        </ul>
-        <p>{% trans "Total" %}: ${{ cart.get_total_price_after_discount|floatformat:"2" }}</p>
-    </div>
 
-    <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="{% trans 'Place order' %}" class="button"></p>
-        {% csrf_token %}
-    </form>
+            <table class="total-table">
+                <tr>
+                    <td><strong>{% trans "Total" %}</strong></td>
+                    <td class="text-right"><strong>${{ cart.get_total_price_after_discount|floatformat:"2" }}</strong></td>
+                </tr>
+            </table>
+
+            <div class="form-actions">
+                <a href="{% url 'cart:cart_detail' %}" class="button light">
+                    <i class="fas fa-arrow-left"></i> {% trans "Back to Cart" %}
+                </a>
+                <button type="submit" form="order-form" class="button">
+                    <i class="fas fa-lock"></i> {% trans "Pay Now" %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
